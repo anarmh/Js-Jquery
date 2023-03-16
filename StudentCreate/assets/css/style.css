@@ -1,8 +1,10 @@
 
 
-
-
-
 .form-control-lg{
     border: 1px solid #dfe3e7;
+}
+
+
+.modal{
+    display: none;
 }

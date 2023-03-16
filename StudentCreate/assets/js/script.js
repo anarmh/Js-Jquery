@@ -1,11 +1,14 @@
 $(document).ready(function () {
-  init();
 
   let students = [];
   if (localStorage.getItem("students")) {
     students = JSON.parse(localStorage.getItem("students"));
   }
-  $("button").click(function () {
+
+  init();
+
+  
+  $(".add").click(function () {
     let StuName = $(".name").val();
     let StuSurname = $(".surname").val();
     let StuAge = $(".age").val();
@@ -21,27 +24,26 @@ $(document).ready(function () {
     });
 
     localStorage.setItem("students", JSON.stringify(students));
-
-    let listStu = JSON.parse(localStorage.getItem("students"));
-
-    $(".tbody").empty();
-    if(listStu!=null){
-      listStu.forEach((stu) => {
-        $(".tbody").append(`<tr data-id="${stu.id}"><td>${stu.name}</td>
-          <td>${stu.surname}</td>
-          <td>${stu.age}</td>
-          <td> <button class="btn btn-danger delete">Remove</button> </td>
-          <td> <button class="btn btn-success update">Update</button> </td>
-          </tr>`);
-      });
-    }
-   
-    RemoveStu()
+    
+    init();
   });
 
+  $(document).on('click',".delete", function () {
+    let id=parseInt($(this).parents("tr").attr("data-id"));
+     students=students.filter(m=>m.id!=id)
+     localStorage.setItem("students",JSON.stringify(students))
+     init();
+   });
+
+
+
+
+
+
   function init() {
-    if (localStorage.getItem("students")) {
-      JSON.parse(localStorage.getItem("students")).forEach((stu) => {
+    if (students) {
+      $(".tbody").empty();
+      students.forEach((stu) => {
         $(".tbody").append(`<tr  data-id="${stu.id}"><td>${stu.name}</td>
                 <td>${stu.surname}</td>
                 <td>${stu.age}</td>
@@ -51,16 +53,31 @@ $(document).ready(function () {
       });
     }
   }
-  function RemoveStu() {
-    $(".delete").click(function () {
-     let id=parseInt($(this).parents("tr").attr("data-id"));
-      students=JSON.parse(localStorage.getItem("students"))
-      let result=students.filter(m=>m.id!=id)
-      localStorage.setItem("students",JSON.stringify(result))
-      $(this).parents("tr").remove();
-    });
-  }
+
+  
 });
+
+
+
+
+
+
+    // let listStu = JSON.parse(localStorage.getItem("students"));
+    // $(".tbody").empty();
+    // if(listStu!=null){
+    //   listStu.forEach((stu) => {
+    //     $(".tbody").append(`<tr data-id="${stu.id}"><td>${stu.name}</td>
+    //       <td>${stu.surname}</td>
+    //       <td>${stu.age}</td>
+    //       <td> <button class="btn btn-danger delete">Remove</button> </td>
+    //       <td> <button class="btn btn-success update">Update</button> </td>
+    //       </tr>`);
+    //   });
+    // }
+   
+
+
+
 
 // $(document).ready(function(){
 
