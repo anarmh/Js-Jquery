@@ -9,9 +9,15 @@ $(document).ready(function () {
 
   
   $(".add").click(function () {
-    let StuName = $(".name").val();
-    let StuSurname = $(".surname").val();
+    
+    let StuName = $(".name").val()
+    let StuSurname = $(".surname").val()
     let StuAge = $(".age").val();
+
+    if((StuName=="" || !isNaN(StuName)) || (StuSurname=="" || !isNaN(StuSurname))||StuAge==""){
+      alert("Please try again")
+      return;
+    }
     let id = localStorage.students
       ? ++JSON.parse(localStorage.students).length
       : 1;
@@ -53,6 +59,44 @@ $(document).ready(function () {
       });
     }
   }
+
+  $(document).on("click",".update",function(){
+
+    $(".modal").click();
+    
+    let id = $(this).closest("tr").data("id");
+    
+    let student = students.find(s => s.id === id);
+    $(".modal-name").val(student.name);
+    $(".modal-surname").val(student.surname);
+    $(".modal-age").val(student.age);
+    $(".change").click(function () {
+    
+      let name = $(".modal-name").val();
+      let surname = $(".modal-surname").val();
+      let age = $(".modal-age").val();
+  
+      
+      student.name = name;
+      student.surname = surname;
+      student.age = age;
+      if((student.name=="" || !isNaN(student.name)) || (student.surname=="" || !isNaN(student.surname))||student.age==""){
+        alert("Please try again")
+        return;
+      }
+  
+     
+      localStorage.setItem("students", JSON.stringify(students));
+  
+     
+      init();
+  
+     
+      $("#exampleModal").modal("hide");
+    });
+
+
+  })
 
   
 });
