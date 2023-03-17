@@ -23,6 +23,12 @@ $(document).ready(function () {
       $("img:last-child").addClass("active-img");
     }
   });
+  $(".dots .dot").click(function(){
+   let index= $(this).index()
+   $(".img img").removeClass("active-img");
+   $(".img img:eq("+index+")").addClass("active-img");
+  })
+
 });
 setInterval(function(){
     let current = $(".active-img");
